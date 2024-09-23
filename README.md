@@ -50,16 +50,31 @@ grep 'model name' /proc/cpuinfo | wc -l
 
 ![image](https://github.com/user-attachments/assets/138ccaca-c595-4b64-a699-f234a4006543)
 
+### Average load vs. CPU usage
+Average load는 시스템의 부하를 대기 중인 프로세스의 수로 측정하며, CPU가 일을 얼마나 할 수 있는지와 관련이 있다
+CPU Usage는 CPU가 현재 얼마나 바쁜지를 보여준다
 
+## average load 이해를 위한 실습
+### iostat, mpstat, pidstat 명령어를 통해 average load 증가 원인 파악
+명령어 사용을 위한 패키지 설치
+```
+apt install stress sysstat
+```
+mpstat는 멀티코어 CPU 성능을 분석하는 데 일반적으로 사용되는 도구로, 각 CPU에 대한 실시간 성능 지표와 모든 CPU에 대한 평균 지표를 보는 데 사용
+<br>
+pidstat는 프로세스 성능을 분석하는 데 일반적으로 사용되는 도구로, 프로세스의 CPU, 메모리, I/O, 컨텍스트 전환에 대한 실시간 성능 지표를 확인하는 데 사용
+<br>
 
+![image](https://github.com/user-attachments/assets/ad083c49-ea0c-44c2-9bfc-d775d95794ff)
 
+<br>
+root 사용자로 전환
 
+```
+sudo su root
+```
 
-
-
-
-
-
+1. CPU 사용률 100% 인 상황
 
 
 
