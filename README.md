@@ -74,7 +74,7 @@ root 사용자로 전환
 sudo su root
 ```
 
-## CPU 사용률 100% 인 상황
+## CPU-intensive process
 ### 1. 부하를 주기위한 stress 명령어
 첫 번째 터미널에서 실행
 ```
@@ -102,6 +102,65 @@ mpstat -P ALL 5
 두 번째 터미널에서 uptime 으로는 average load가 1.00으로 점점 증가하는 것을 확인할 수 있고
 <br>
 세 번째 터미널에서 mpstat 로는 CPU 사용량이 100%에 가깝고 iowait가 0에 가까운 것을 확인 가능
+<br>
+그렇다면 어떤 프로세스가 CPU 사용량을 100%로 만들고 있는지 pidstat로 확인
+```
+pidstat -u 5 1
+```
+![image](https://github.com/user-attachments/assets/54989a90-6d36-4cb8-97ca-bb7495c90b3e)
+
+stress process에 의해 일어났다는 것을 확인 가능
+
+##  I/O-intensive process
+### 1. 부하를 주기위한 stress 명령어
+첫 번째 터미널에서 실행
+```
+stress -i 1 --timeout 600
+```
+![image](https://github.com/user-attachments/assets/9da7093d-e0a4-4690-b973-0856527ad1da)
+### 2. 전과 마찬가지로 uptime, mpstat 입력
+load average 가 동일하게 1.00 에 근접하게 올라가지만
+mpstat를 살펴보면 iowait 로 인해 CPU 사용량이 증가하는 것을 알수 있음
+
+![image](https://github.com/user-attachments/assets/7319f14e-4a7b-406c-8e3b-2ebd88b4c155)
+
+## scenario with a large number of processes
+### 1. 프로세의 개수를 8개로 해서 부하 발생
+```
+stress -c 8 --timeout 600
+```
+![image](https://github.com/user-attachments/assets/fd73b779-fb9b-4913-a1cb-604849d1c1af)
+
+### 2. load average
+uptime으로 load average 확인 시 8에 가까워지는 것을 확인 가능
+![image](https://github.com/user-attachments/assets/d9d1f205-7d59-41cb-af52-bd3261448b5b)
+
+### 3. pidstat 로 프로세스 상황 확인
+
+![image](https://github.com/user-attachments/assets/9788da3d-40a4-46b5-8ff7-9827d9bc66f9)
+
+8개의 프로세스가 2개의 CPU를 놓고 경쟁 중인 것을 확인 가능
+
+## 결론
+load average 를 통해 시스템의 전체 성능을 빠르게 평가할 수 있지만
+<br>
+load average만으로는 어디에서 부하가 발생하는지 직접 확인 불가능 
+따라서 정확히 load average를 이해하기 위해서는 아래 3가지 사항을 유의해야 함
+
+#### 1. 높은 load average는 CPU를 많이 사용하는 프로세스로 인해 발생할 가능성이 높다
+#### 2. 높은 load average는 반드시 CPU 사용률이 높다는 것을 의미하지는 않는다 I/O 활동이 증가했음을 나타낼 수도 있다
+#### 3. 높은 load average가 발견되면 mpstat, pidstat 등의 도구를 사용하여 부하의 원인을 분석할 수 있다
+
+
+
+
+
+
+
+
+
+
+
 
 
 
