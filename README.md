@@ -1,6 +1,6 @@
 # Average-Load-in-Linux
 
-## 
+## 시스템에서 응답 지연과 성능 저하 현상이 발생해, 그 원인을 파악하고 해결할 필요성을 느껴 load average와 CPU 사용률의 상관관계를 분석하는 테스트를 진행하고 이를 통해 부하의 주요원인이 무엇인지 정확히 파악 및 성능 개선을 위한 구체적인 방안을 마련하고자 함
 
 ![image](https://github.com/user-attachments/assets/3e10cfc3-ea5a-40a0-abb6-8a2ef3523998)
 
