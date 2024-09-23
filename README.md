@@ -54,7 +54,7 @@ grep 'model name' /proc/cpuinfo | wc -l
 Average load는 시스템의 부하를 대기 중인 프로세스의 수로 측정하며, CPU가 일을 얼마나 할 수 있는지와 관련이 있다
 CPU Usage는 CPU가 현재 얼마나 바쁜지를 보여준다
 
-## average load 이해를 위한 실습
+## average load 이해를 위한 test
 ### iostat, mpstat, pidstat 명령어를 통해 average load 증가 원인 파악
 명령어 사용을 위한 패키지 설치
 ```
@@ -74,8 +74,34 @@ root 사용자로 전환
 sudo su root
 ```
 
-1. CPU 사용률 100% 인 상황
+## CPU 사용률 100% 인 상황
+### 1. 부하를 주기위한 stress 명령어
+첫 번째 터미널에서 실행
+```
+stress --cpu 1 --timeout 600
+```
 
+![image](https://github.com/user-attachments/assets/c559326d-cb46-4ada-a309-fae7ef089e9b)
+
+### 2. average load의 변화를 살펴보기 위한 uptime 명령어
+두 번째 터미널에서 실행
+```
+watch -d uptime
+```
+
+![image](https://github.com/user-attachments/assets/5858f20a-5c4a-44a6-be22-4826edebe75e)
+
+### 3. CPU 사용량의 변화를 살펴보기 위한 mpstat 명령어
+세 번째 터미널에서 실행
+```
+mpstat -P ALL 5
+```
+
+![image](https://github.com/user-attachments/assets/5c214020-c599-4d3d-9265-33afeaa5d307)
+
+두 번째 터미널에서 uptime 으로는 average load가 1.00으로 점점 증가하는 것을 확인할 수 있고
+<br>
+세 번째 터미널에서 mpstat 로는 CPU 사용량이 100%에 가깝고 iowait가 0에 가까운 것을 확인 가능
 
 
 
